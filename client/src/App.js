@@ -32,7 +32,7 @@ function App() {
           {posts.map((post) => (
             <Card key={post.id} post={post} socket={socket} user={user} />
           ))}
-          <span className="username">{user}</span>
+          <span className="username">{"Username: " + user}</span>
         </>
       ) : (
         <div className="login">

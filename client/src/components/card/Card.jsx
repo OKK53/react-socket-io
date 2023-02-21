@@ -1,11 +1,7 @@
 import "./card.css";
-import {
-  IoMdHeartEmpty,
-  IoMdHeart,
-  IoMdInformationCircleOutline,
-} from "react-icons/io";
+import { IoMdInformationCircleOutline } from "react-icons/io";
 import { FaRegComment } from "react-icons/fa";
-import { RiShareBoxFill } from "react-icons/ri";
+import { RiHeartLine, RiHeartFill, RiShareBoxFill } from "react-icons/ri";
 import { useState } from "react";
 function Card({ post, socket, user }) {
   const [liked, setLiked] = useState(false);
@@ -27,12 +23,12 @@ function Card({ post, socket, user }) {
       <img src={post.postImg} alt="" className="postImg" />
       <div className="interaction">
         {liked ? (
-          <IoMdHeart
+          <RiHeartFill
             className="cardIcon likedIcon"
             onClick={() => handleNotification(1)}
           />
         ) : (
-          <IoMdHeartEmpty
+          <RiHeartLine
             className="cardIcon"
             onClick={() => handleNotification(1)}
           />

@@ -3,9 +3,10 @@
     background-color: #128C7E;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     color: white;
     position: relative;
+    padding: 0 15px;
 }
 
 .logo{

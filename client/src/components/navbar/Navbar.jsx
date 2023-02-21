@@ -6,14 +6,13 @@ import { useEffect, useState } from "react";
 function Navbar({ socket }) {
   const [notifications, setNotifications] = useState([]);
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     socket.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
     });
   }, [socket]);
 
-  const displayNotification = ({ senderName, type }) => {
+  const displayNotification = ({ senderName, type }, idx) => {
     let action;
 
     if (type === 1) {
@@ -24,7 +23,10 @@ function Navbar({ socket }) {
       action = "shared";
     }
     return (
-      <span className="notification">{`${senderName} ${action} your post.`}</span>
+      <span
+        key={idx}
+        className="notification"
+      >{`${senderName} ${action} your post.`}</span>
     );
   };
 
@@ -44,19 +46,21 @@ function Navbar({ socket }) {
             <div className="counter">{notifications.length}</div>
           )}
         </div>
-        <div className="icon" onClick={() => setOpen(!open)}>
+        <div className="icon">
           <MdLocalPostOffice className="iconImg" />
         </div>
-        <div className="icon" onClick={() => setOpen(!open)}>
+        <div className="icon">
           <RiSettings3Fill className="iconImg" />
         </div>
       </div>
       {open && (
         <div className="notifications">
-          {notifications.map((n) => displayNotification(n))}
-          <button className="nButton" onClick={handleRead}>
-            Mark as read
-          </button>
+          {notifications.map((n, idx) => displayNotification(n, idx))}
+          {notifications.length > 0 && (
+            <button className="nButton" onClick={handleRead}>
+              Mark as read
+            </button>
+          )}
         </div>
       )}
     </div>
