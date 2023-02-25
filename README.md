@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).\
 Inspired by [Lama Dev](https://www.youtube.com/watch?v=7vVqMR96T5o&t=2s&ab_channel=LamaDev).
 
 ## Available Scripts

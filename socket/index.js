@@ -36,11 +36,11 @@ io.on("connection", (socket) => {
     });
   });
 
-  socket.on("sendText", ({ senderName, receiverName, text }) => {
+  socket.on("sendMsg", ({ senderName, receiverName, msg }) => {
     const receiver = getUser(receiverName);
-    io.to(receiver.socketId).emit("getText", {
+    io.to(receiver.socketId).emit("getMsg", {
       senderName,
-      text,
+      msg,
     });
   });
 

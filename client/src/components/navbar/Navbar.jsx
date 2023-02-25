@@ -5,10 +5,16 @@ import { useEffect, useState } from "react";
 
 function Navbar({ socket }) {
   const [notifications, setNotifications] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [openNofitications, setOpenNofitications] = useState(false);
+  const [openMessages, setOpenMessages] = useState(false);
+
   useEffect(() => {
     socket.on("getNotification", (data) => {
       setNotifications((prev) => [...prev, data]);
+    });
+    socket.on("getMsg", (data) => {
+      setMessages((prev) => [...prev, data]);
     });
   }, [socket]);
 
@@ -30,34 +36,71 @@ function Navbar({ socket }) {
     );
   };
 
-  // console.log(notifications);
-
-  const handleRead = () => {
-    setNotifications([]);
-    setOpen(false);
+  const displayMessage = ({ senderName, msg }, idx) => {
+    return (
+      <span key={idx} className="notification">{`${senderName}: ${msg} `}</span>
+    );
   };
+
+  // console.log(notifications);
+  const handleNotification = () => {
+    if (notifications.length > 0) {
+      setOpenNofitications(!openNofitications);
+      setOpenMessages(false);
+    }
+  };
+  const handleMessages = () => {
+    if (messages.length > 0) {
+      setOpenMessages(!openMessages);
+      setOpenNofitications(false);
+    }
+  };
+
+  const handleReadNotifications = () => {
+    setNotifications([]);
+    setOpenNofitications(false);
+  };
+
+  const handleReadMessages = () => {
+    setMessages([]);
+    setOpenMessages(false);
+  };
+
   return (
     <div className="navbar">
       <span className="logo">OKK App</span>
       <div className="icons">
-        <div className="icon" onClick={() => setOpen(!open)}>
+        <div className="icon" onClick={handleNotification}>
           <MdNotifications className="iconImg" />
           {notifications.length > 0 && (
             <div className="counter">{notifications.length}</div>
           )}
         </div>
-        <div className="icon">
+        <div className="icon" onClick={handleMessages}>
           <MdLocalPostOffice className="iconImg" />
+          {messages.length > 0 && (
+            <div className="counter">{messages.length}</div>
+          )}
         </div>
         <div className="icon">
           <RiSettings3Fill className="iconImg" />
         </div>
       </div>
-      {open && (
+      {openNofitications && (
         <div className="notifications">
           {notifications.map((n, idx) => displayNotification(n, idx))}
           {notifications.length > 0 && (
-            <button className="nButton" onClick={handleRead}>
+            <button className="nButton" onClick={handleReadNotifications}>
+              Mark as read
+            </button>
+          )}
+        </div>
+      )}
+      {openMessages && (
+        <div className="notifications">
+          {messages.map((n, idx) => displayMessage(n, idx))}
+          {messages.length > 0 && (
+            <button className="nButton" onClick={handleReadMessages}>
               Mark as read
             </button>
           )}
