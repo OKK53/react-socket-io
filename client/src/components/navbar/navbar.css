@@ -55,6 +55,8 @@
     color: #222;
     font-weight: 300;
     z-index: 10;
+    max-height: 210px;
+    overflow: scroll;
 }
 
 .notification{
